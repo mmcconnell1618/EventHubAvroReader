@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ConsoleSample
 {
@@ -9,7 +10,17 @@ namespace ConsoleSample
             if (args.Length > 0)
             {
                 string fileName = args[0];
-                var items = EventHubAvroReader.AvroParser.ParseAvroFile(fileName);
+                List<EventHubAvroReader.EventHubAvroData> items = new List<EventHubAvroReader.EventHubAvroData>();
+
+                if (fileName.StartsWith("http"))
+                {
+                    items = EventHubAvroReader.AvroParser.ParseDataFromCloudStorage(fileName);
+                }
+                else
+                {
+                    items = EventHubAvroReader.AvroParser.ParseAvroFile(fileName);
+                }
+
                 Console.WriteLine("Parsed {0} items", items.Count);
                 foreach(var item in items)
                 {
