@@ -7,7 +7,7 @@ using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace EventHubAvroReader
 {
-    public class AvroParser
+    public static class AvroParser
     {
         public static List<EventHubAvroData> ParseDataFromCloudStorage(string sas)
         {
