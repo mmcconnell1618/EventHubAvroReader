@@ -2,11 +2,25 @@
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace EventHubAvroReader
 {
     public class AvroParser
     {
+        public static List<EventHubAvroData> ParseDataFromCloudStorage(string sas)
+        {
+            CloudBlockBlob blob = new CloudBlockBlob(new Uri(sas));
+            MemoryStream ms = new MemoryStream();
+            using (ms)
+            {
+                blob.DownloadToStreamAsync(ms).Wait();
+                ms.Position = 0;
+                return ParseAvroFile(ms);
+            }
+        }
+
         public static List<EventHubAvroData> ParseAvroFile(string fileName)
         {
             if (!File.Exists(fileName))
