@@ -32,7 +32,7 @@ namespace ConsoleSample
                 Console.WriteLine("Missing input file name!");
             }
 
-            //Console.ReadKey();
+            Console.ReadKey();
         }
     }
 }
